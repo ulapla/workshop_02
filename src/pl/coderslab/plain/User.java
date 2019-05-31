@@ -8,6 +8,7 @@ public class User {
     private String name;
     private String password; //zahashowane
     private String email; //unikatowy
+    private int userGroupId;
 
     public User() {
     }
@@ -16,10 +17,11 @@ public class User {
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
-    public User(String name, String email, String password) {
+    public User(String name, String email, String password, int userGroupId) {
         this.name = name;
         this.hashPassword(password);
         this.email = email;
+        this.userGroupId = userGroupId;
     }
 
     public int getId() {
@@ -62,5 +64,13 @@ public class User {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 '}';
+    }
+
+    public int getUserGroupId() {
+        return userGroupId;
+    }
+
+    public void setUserGroupId(int userGroupId) {
+        this.userGroupId = userGroupId;
     }
 }

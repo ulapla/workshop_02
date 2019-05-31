@@ -8,9 +8,9 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        User user = new User("Jan Kowalski", "Jan.Kowalski@gmail.com", "tajne");
-        User user1 = new User("Adam Kowalski", "adam.Kowalski@gmail.com", "tajne");
-        User user2 = new User("Robert Kowalski", "robert.Kowalski@gmail.com", "tajne");
+        User user = new User("Jan Kowalski", "Jan.Kowalski@gmail.com", "tajne", 1);
+        User user1 = new User("Adam Kowalski", "adam.Kowalski@gmail.com", "tajne", 1);
+        User user2 = new User("Robert Kowalski", "robert.Kowalski@gmail.com", "tajne", 1);
 
         UserDao userDao = new UserDao();
 

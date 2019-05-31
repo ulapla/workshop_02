@@ -1,6 +1,7 @@
 package pl.coderslab.dao;
 
 import pl.coderslab.plain.User;
+import pl.coderslab.utlis.DatabaseUtils;
 
 import java.sql.*;
 import java.util.Arrays;
@@ -12,11 +13,11 @@ public class UserDao {
     private final String PASSWORD = "coderslab";
 
     private static final String CREATE_USER_QUERY =
-            "INSERT INTO user(name, email, password) VALUES (?, ?, ?)";
+            "INSERT INTO user(name, email, password, user_group_id) VALUES (?, ?, ? ,?)";
     private static final String READ_USER_QUERY =
             "SELECT * FROM user where id = ?";
     private static final String UPDATE_USER_QUERY =
-            "UPDATE user SET name = ?, email = ?, password = ? where id = ?";
+            "UPDATE user SET name = ?, email = ?, password = ?, user_group_id = ? where id = ?";
     private static final String DELETE_USER_QUERY =
             "DELETE FROM user WHERE id = ?";
     private static final String FIND_ALL_USERS_QUERY =
@@ -25,12 +26,13 @@ public class UserDao {
 
 
     public User create(User user) {
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        try (Connection conn = DatabaseUtils.getConnection("java_warsztat_2")) {
             PreparedStatement statement =
                     conn.prepareStatement(CREATE_USER_QUERY, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, user.getName());
             statement.setString(2, user.getEmail());
             statement.setString(3, user.getPassword());
+            statement.setInt(4, user.getUserGroupId());
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
@@ -46,7 +48,7 @@ public class UserDao {
 
 
     public User read(int userId) {
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        try (Connection conn = DatabaseUtils.getConnection("java_warsztat_2")) {
             PreparedStatement statement = conn.prepareStatement(READ_USER_QUERY);
             statement.setInt(1, userId);
             ResultSet resultSet = statement.executeQuery();
@@ -56,6 +58,7 @@ public class UserDao {
                 user.setName(resultSet.getString("name"));
                 user.setEmail(resultSet.getString("email"));
                 user.setPassword(resultSet.getString("password"));
+                user.setUserGroupId(resultSet.getInt("user_group_id"));
                 return user;
             }
         } catch (SQLException e) {
@@ -65,12 +68,13 @@ public class UserDao {
     }
 
     public void update(User user) {
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        try (Connection conn = DatabaseUtils.getConnection("java_warsztat_2")) {
             PreparedStatement statement = conn.prepareStatement(UPDATE_USER_QUERY);
             statement.setString(1, user.getName());
             statement.setString(2, user.getEmail());
             statement.setString(3, user.getPassword());
-            statement.setInt(4, user.getId());
+            statement.setInt(4, user.getUserGroupId());
+            statement.setInt(5, user.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -78,7 +82,7 @@ public class UserDao {
     }
 
     public void delete(int userId) {
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        try (Connection conn = DatabaseUtils.getConnection("java_warsztat_2")) {
             PreparedStatement statement = conn.prepareStatement(DELETE_USER_QUERY);
             statement.setInt(1, userId);
             statement.executeUpdate();
@@ -94,7 +98,7 @@ public class UserDao {
     }
 
     public User[] findAll() {
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        try (Connection conn = DatabaseUtils.getConnection("java_warsztat_2")) {
             User[] users = new User[0];
             PreparedStatement statement = conn.prepareStatement(FIND_ALL_USERS_QUERY);
             ResultSet resultSet = statement.executeQuery();
@@ -104,6 +108,7 @@ public class UserDao {
                 user.setName(resultSet.getString("name"));
                 user.setEmail(resultSet.getString("email"));
                 user.setPassword(resultSet.getString("password"));
+                user.setUserGroupId(resultSet.getInt("user_group_id"));
                 users = addToArray(user, users);
             }
             return users;
