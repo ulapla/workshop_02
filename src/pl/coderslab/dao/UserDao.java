@@ -3,6 +3,7 @@ package pl.coderslab.dao;
 import pl.coderslab.plain.User;
 
 import java.sql.*;
+import java.util.Arrays;
 
 public class UserDao {
     private final String URL =
@@ -85,6 +86,30 @@ public class UserDao {
             e.printStackTrace();
         }
     }
+
+    private User[] addToArray(User user, User[] users) {
+        User[] tmpUsers = Arrays.copyOf(users, users.length + 1);
+        tmpUsers[users.length] = user;
+        return tmpUsers;
+    }
+
+    public User[] findAll() {
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
+            User[] users = new User[0];
+            PreparedStatement statement = conn.prepareStatement(FIND_ALL_USERS_QUERY);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                User user = new User();
+                user.setId(resultSet.getInt("id"));
+                user.setName(resultSet.getString("name"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPassword(resultSet.getString("password"));
+                users = addToArray(user, users);
+            }
+            return users;
+        } catch (SQLException e) {
+            e.printStackTrace(); return null;
+        }}
 
 
 
