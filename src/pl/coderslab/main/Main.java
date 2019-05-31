@@ -11,5 +11,16 @@ public class Main {
 
         User loadUser = userDao.read(1);
         System.out.println(loadUser);
+
+        User notExist = userDao.read(100);
+        System.out.println(notExist);
+
+        loadUser.setName("Adam Nowak");
+        loadUser.setEmail("adam.nowak@gmail.com");
+        userDao.update(loadUser);
+
+        User copyUser = userDao.read(1);
+        System.out.println(copyUser);
+
     }
 }

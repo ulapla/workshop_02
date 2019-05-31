@@ -39,7 +39,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-        hashPassword(password);
+        this.password = password;
     }
 
     public String getEmail() {
