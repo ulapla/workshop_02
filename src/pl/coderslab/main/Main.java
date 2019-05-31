@@ -7,9 +7,10 @@ public class Main {
     public static void main(String[] args) {
         User user = new User("Jan Kowalski", "Jan.Kowalski@gmail.com", "tajne");
         UserDao userDao = new UserDao();
-        //userDao.create(user);
+        userDao.create(user);
+        int id = user.getId();
 
-        User loadUser = userDao.read(1);
+        User loadUser = userDao.read(id);
         System.out.println(loadUser);
 
         User notExist = userDao.read(100);
@@ -19,8 +20,13 @@ public class Main {
         loadUser.setEmail("adam.nowak@gmail.com");
         userDao.update(loadUser);
 
-        User copyUser = userDao.read(1);
+        User copyUser = userDao.read(id);
         System.out.println(copyUser);
+
+        userDao.delete(id);
+
+        User loadAgain = userDao.read(id);
+        System.out.println(loadAgain);
 
     }
 }
