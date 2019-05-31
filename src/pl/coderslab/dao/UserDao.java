@@ -42,4 +42,26 @@ public class UserDao {
         }
     }
 
+
+
+    public User read(int userId) {
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
+            PreparedStatement statement = conn.prepareStatement(READ_USER_QUERY);
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                User user = new User();
+                user.setId(resultSet.getInt("id"));
+                user.setName(resultSet.getString("name"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPassword(resultSet.getString("password"));
+                return user;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
 }
