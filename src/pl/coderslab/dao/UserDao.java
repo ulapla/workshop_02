@@ -11,15 +11,15 @@ public class UserDao {
     private final String PASSWORD = "coderslab";
 
     private static final String CREATE_USER_QUERY =
-            "INSERT INTO users(name, email, password) VALUES (?, ?, ?)";
+            "INSERT INTO user(name, email, password) VALUES (?, ?, ?)";
     private static final String READ_USER_QUERY =
-            "SELECT * FROM users where id = ?";
+            "SELECT * FROM user where id = ?";
     private static final String UPDATE_USER_QUERY =
-            "UPDATE users SET name = ?, email = ?, password = ? where id = ?";
+            "UPDATE user SET name = ?, email = ?, password = ? where id = ?";
     private static final String DELETE_USER_QUERY =
-            "DELETE FROM users WHERE id = ?";
+            "DELETE FROM user WHERE id = ?";
     private static final String FIND_ALL_USERS_QUERY =
-            "SELECT * FROM users";
+            "SELECT * FROM user";
 
 
 
