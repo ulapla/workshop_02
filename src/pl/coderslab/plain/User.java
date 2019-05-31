@@ -1,5 +1,7 @@
 package pl.coderslab.plain;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 public class User {
 
     private int id;
@@ -10,9 +12,13 @@ public class User {
     public User() {
     }
 
-    public User(String name, String password, String email) {
+    public void hashPassword(String password) {
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+
+    public User(String name, String email, String password) {
         this.name = name;
-        this.password = password;
+        this.hashPassword(password);
         this.email = email;
     }
 
@@ -42,5 +48,9 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
