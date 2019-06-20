@@ -1,10 +1,13 @@
 package pl.coderslab.main;
 
+import pl.coderslab.dao.SolutionDao;
 import pl.coderslab.dao.UserDao;
+import pl.coderslab.plain.Solution;
 import pl.coderslab.plain.User;
 
 import java.sql.*;
 import java.util.Arrays;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -14,13 +17,13 @@ public class Main {
 
         UserDao userDao = new UserDao();
 
-        userDao.create(user);
-        userDao.create(user1);
-        userDao.create(user2);
+//        userDao.create(user);
+//        userDao.create(user1);
+//        userDao.create(user2);
 
-        int id = user.getId();
+//        int id = user.getId();
 
-        User loadUser = userDao.read(id);
+        User loadUser = userDao.read(1);
         System.out.println(loadUser);
 
         User notExist = userDao.read(100);
@@ -30,12 +33,12 @@ public class Main {
         loadUser.setEmail("adam.nowak@gmail.com");
         userDao.update(loadUser);
 
-        User copyUser = userDao.read(id);
+        User copyUser = userDao.read(1);
         System.out.println(copyUser);
 
         //userDao.delete(id);
 
-        User loadAgain = userDao.read(id);
+        User loadAgain = userDao.read(1);
         System.out.println(loadAgain);
 
         System.out.println("find all users");
@@ -44,9 +47,24 @@ public class Main {
             System.out.println(myUser);
         }
 
-        userDao.delete(id);
-        userDao.delete(user1.getId());
-        userDao.delete(user2.getId());
+//        userDao.delete(id);
+//        userDao.delete(user1.getId());
+//        userDao.delete(user2.getId());
+
+
+        Solution solution = new Solution("2019-06-02","2019-06-03","nowe rozwiązanie",1,1);
+        SolutionDao solutionDao = new SolutionDao();
+        solutionDao.create(solution);
+        System.out.println(solutionDao.read(solution.getId()));
+        solution.setUpdated("2019-06-19");
+        solutionDao.update(solution);
+        System.out.println(solutionDao.read(solution.getId()));
+        solutionDao.delete(solution.getId());
+        List<Solution> all = solutionDao.findAll();
+        for(Solution sol : all){
+            System.out.println(sol);
+        }
+
     }
 
 
