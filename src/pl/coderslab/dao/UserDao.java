@@ -4,7 +4,9 @@ import pl.coderslab.plain.User;
 import pl.coderslab.utlis.DatabaseUtils;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class UserDao {
     private final String URL =
@@ -22,6 +24,9 @@ public class UserDao {
             "DELETE FROM user WHERE id = ?";
     private static final String FIND_ALL_USERS_QUERY =
             "SELECT * FROM user";
+    private static final String FIND_ALL_USERS_BY_GROUP_ID_QUERY =
+            "SELECT * FROM user WHERE user_group_id = ?";
+
 
 
 
@@ -114,7 +119,31 @@ public class UserDao {
             return users;
         } catch (SQLException e) {
             e.printStackTrace(); return null;
-        }}
+        }
+    }
+
+    public List<User> findAllByGroupId(int groupId){
+        try (Connection conn = DatabaseUtils.getConnection("java_warsztat_2")) {
+            List<User> users = new ArrayList<>();
+            PreparedStatement statement = conn.prepareStatement(FIND_ALL_USERS_BY_GROUP_ID_QUERY);
+            statement.setInt(1, groupId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                User user = new User();
+                user.setId(resultSet.getInt("id"));
+                user.setName(resultSet.getString("name"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPassword(resultSet.getString("password"));
+                user.setUserGroupId(resultSet.getInt("user_group_id"));
+                users.add(user);
+            }
+            return users;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
 
 
 

@@ -113,17 +113,24 @@ public class Main {
 //        for(Group group1 : allgroup){
 //            System.out.println(group1);
 //        }
-//    }
+//
 
+//
+//        SolutionDao solutionDao = new SolutionDao();
+//        List<Solution> all = solutionDao.findAllByUserId(1);
+//        for(Solution solution: all){
+//            System.out.println(solution);
+//        }
+//        List<Solution> allByExerciseId = solutionDao.findAllByExerciseId(1);
+//        for(Solution solution : allByExerciseId){
+//            System.out.println(solution);
+//        }
 
-        SolutionDao solutionDao = new SolutionDao();
-        List<Solution> all = solutionDao.findAllByUserId(1);
-        for(Solution solution: all){
-            System.out.println(solution);
+        UserDao userDao = new UserDao();
+        List<User> allByGroupId = userDao.findAllByGroupId(1);
+        for(User user : allByGroupId){
+            System.out.println(user);
         }
-        List<Solution> allByExerciseId = solutionDao.findAllByExerciseId(1);
-        for(Solution solution : allByExerciseId){
-            System.out.println(solution);
-        }
+
     }
 }
