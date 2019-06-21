@@ -1,9 +1,11 @@
 package pl.coderslab.main;
 
 import pl.coderslab.dao.ExerciseDao;
+import pl.coderslab.dao.GroupDao;
 import pl.coderslab.dao.SolutionDao;
 import pl.coderslab.dao.UserDao;
 import pl.coderslab.plain.Exercise;
+import pl.coderslab.plain.Group;
 import pl.coderslab.plain.Solution;
 import pl.coderslab.plain.User;
 
@@ -67,25 +69,49 @@ public class Main {
 //            System.out.println(sol);
 //        }
 
-        Exercise exercise = new Exercise();
-        exercise.setTitle("Zadanie 2");
-        exercise.setDescription("tresc zadania");
-        ExerciseDao exerciseDao = new ExerciseDao();
-        exerciseDao.create(exercise);
-        System.out.println(exerciseDao.read(exercise.getId()));
-        exercise.setDescription("nowa treść zadania");
-        exerciseDao.update(exercise);
-        System.out.println(exerciseDao.read(exercise.getId()));
-        System.out.println("------------");
-        List<Exercise> all = exerciseDao.findAll();
-        for(Exercise exer :all){
-            System.out.println(exer);
+//        Exercise exercise = new Exercise();
+//        exercise.setTitle("Zadanie 2");
+//        exercise.setDescription("tresc zadania");
+//        ExerciseDao exerciseDao = new ExerciseDao();
+//        exerciseDao.create(exercise);
+//        System.out.println(exerciseDao.read(exercise.getId()));
+//        exercise.setDescription("nowa treść zadania");
+//        exerciseDao.update(exercise);
+//        System.out.println(exerciseDao.read(exercise.getId()));
+//        System.out.println("------------");
+//        List<Exercise> all = exerciseDao.findAll();
+//        for(Exercise exer :all){
+//            System.out.println(exer);
+//        }
+//        exerciseDao.delete(exercise.getId());
+//        List<Exercise> allex = exerciseDao.findAll();
+//        System.out.println("------------");
+//        for(Exercise exer :allex){
+//            System.out.println(exer);
+//        }
+        System.out.println("---------");
+        GroupDao groupDao = new GroupDao();
+        Group group = new Group();
+        group.setName("pierwsza grupa");
+        groupDao.create(group);
+
+        Group group2 = new Group();
+        group2.setName("druga grupa");
+        groupDao.create(group2);
+
+        System.out.println(groupDao.read(group.getId()));
+        System.out.println("----------");
+        group2.setName("nowa druga grupa");
+        groupDao.update(group2);
+        List<Group> all = groupDao.findAll();
+        for(Group group1 : all){
+            System.out.println(group1);
         }
-        exerciseDao.delete(exercise.getId());
-        List<Exercise> allex = exerciseDao.findAll();
-        System.out.println("------------");
-        for(Exercise exer :allex){
-            System.out.println(exer);
+        System.out.println("-----------");
+        groupDao.delete(group2.getId());
+        List<Group> allgroup = groupDao.findAll();
+        for(Group group1 : allgroup){
+            System.out.println(group1);
         }
     }
 
