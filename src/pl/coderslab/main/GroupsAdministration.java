@@ -1,8 +1,10 @@
 package pl.coderslab.main;
 
 import pl.coderslab.dao.GroupDao;
+import pl.coderslab.dao.SolutionDao;
 import pl.coderslab.dao.UserDao;
 import pl.coderslab.plain.Group;
+import pl.coderslab.plain.Solution;
 import pl.coderslab.plain.User;
 
 import java.util.List;
@@ -74,8 +76,13 @@ public class GroupsAdministration {
 
                     //usunęcie rozwiązań użytkownika / user's solutions delete
                     UserDao userDao = new UserDao();
+                    SolutionDao solutionDao = new SolutionDao();
                     List<User> userList = userDao.findAllByGroupId(groupId);
                     for(User user : userList){
+                        List<Solution> solutionList = solutionDao.findAllByUserId(user.getId());
+                        for(Solution solution : solutionList){
+                            solutionDao.delete(solution.getId());
+                        }
                         userDao.delete(user.getId());
                     }
 
