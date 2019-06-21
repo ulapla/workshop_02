@@ -1,5 +1,6 @@
 package pl.coderslab.dao;
 
+import org.mindrot.jbcrypt.BCrypt;
 import pl.coderslab.plain.User;
 import pl.coderslab.utlis.DatabaseUtils;
 
@@ -36,7 +37,7 @@ public class UserDao {
                     conn.prepareStatement(CREATE_USER_QUERY, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, user.getName());
             statement.setString(2, user.getEmail());
-            statement.setString(3, user.getPassword());
+            statement.setString(3, BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
             statement.setInt(4, user.getUserGroupId());
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
@@ -49,7 +50,6 @@ public class UserDao {
             return null;
         }
     }
-
 
 
     public User read(int userId) {
@@ -72,12 +72,20 @@ public class UserDao {
         return null;
     }
 
+
     public void update(User user) {
         try (Connection conn = DatabaseUtils.getConnection("java_warsztat_2")) {
             PreparedStatement statement = conn.prepareStatement(UPDATE_USER_QUERY);
             statement.setString(1, user.getName());
             statement.setString(2, user.getEmail());
-            statement.setString(3, user.getPassword());
+            // czy zmieniono hasło / if password is changed
+            if(!user.getPassword().equals(read(user.getId()).getPassword())) {
+                //szyfrowanie hasła / hash new password
+                statement.setString(3,BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+            }
+            else{//otherwise it is already hashed
+                statement.setString(3, user.getPassword());
+            }
             statement.setInt(4, user.getUserGroupId());
             statement.setInt(5, user.getId());
             statement.executeUpdate();
@@ -85,6 +93,7 @@ public class UserDao {
             e.printStackTrace();
         }
     }
+
 
     public void delete(int userId) {
         try (Connection conn = DatabaseUtils.getConnection("java_warsztat_2")) {
@@ -96,11 +105,14 @@ public class UserDao {
         }
     }
 
+
+    // needed if List object is not used
     private User[] addToArray(User user, User[] users) {
         User[] tmpUsers = Arrays.copyOf(users, users.length + 1);
         tmpUsers[users.length] = user;
         return tmpUsers;
     }
+
 
     public User[] findAll() {
         try (Connection conn = DatabaseUtils.getConnection("java_warsztat_2")) {
@@ -121,6 +133,7 @@ public class UserDao {
             e.printStackTrace(); return null;
         }
     }
+
 
     public List<User> findAllByGroupId(int groupId){
         try (Connection conn = DatabaseUtils.getConnection("java_warsztat_2")) {
@@ -143,9 +156,4 @@ public class UserDao {
             return null;
         }
     }
-    
-
-
-
-
 }

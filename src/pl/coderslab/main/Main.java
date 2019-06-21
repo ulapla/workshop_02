@@ -12,125 +12,115 @@ import pl.coderslab.plain.User;
 import java.sql.*;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-//        User user = new User("Jan Kowalski", "Jan.Kowalski@gmail.com", "tajne", 1);
-//        User user1 = new User("Adam Kowalski", "adam.Kowalski@gmail.com", "tajne", 1);
-//        User user2 = new User("Robert Kowalski", "robert.Kowalski@gmail.com", "tajne", 1);
-//
-//        UserDao userDao = new UserDao();
-//
-//        userDao.create(user);
-//        userDao.create(user1);
-//        userDao.create(user2);
-//
-//        int id = user.getId();
-//
-//        User loadUser = userDao.read(1);
-//        System.out.println(loadUser);
-//
-//        User notExist = userDao.read(100);
-//        System.out.println(notExist);
-//
-//        loadUser.setName("Adam Nowak");
-//        loadUser.setEmail("adam.nowak@gmail.com");
-//        userDao.update(loadUser);
-//
-//        User copyUser = userDao.read(1);
-//        System.out.println(copyUser);
-//
-//        //userDao.delete(id);
-//
-//        User loadAgain = userDao.read(1);
-//        System.out.println(loadAgain);
-//
-//        System.out.println("find all users");
-//        User[] users = userDao.findAll();
-//        for(User myUser : users) {
-//            System.out.println(myUser);
-//        }
-
-//        userDao.delete(id);
-//        userDao.delete(user1.getId());
-//        userDao.delete(user2.getId());
 
 
-//        Solution solution = new Solution("2019-06-02","2019-06-03","nowe rozwiązanie",1,1);
-//        SolutionDao solutionDao = new SolutionDao();
-//        solutionDao.create(solution);
-//        System.out.println(solutionDao.read(solution.getId()));
-//        solution.setUpdated("2019-06-19");
-//        solutionDao.update(solution);
-//        System.out.println(solutionDao.read(solution.getId()));
-//        solutionDao.delete(solution.getId());
-//        List<Solution> all = solutionDao.findAll();
-//        for(Solution sol : all){
-//            System.out.println(sol);
-//        }
+        boolean work = true;
+        while(work) {
+            System.out.println();
+            System.out.println("---------------Users administration-----------------");
+            UserDao userDao = new UserDao();
+            User[] users = userDao.findAll();
+            for (User user :users){
+                System.out.println(user);
+            }
 
-//        Exercise exercise = new Exercise();
-//        exercise.setTitle("Zadanie 2");
-//        exercise.setDescription("tresc zadania");
-//        ExerciseDao exerciseDao = new ExerciseDao();
-//        exerciseDao.create(exercise);
-//        System.out.println(exerciseDao.read(exercise.getId()));
-//        exercise.setDescription("nowa treść zadania");
-//        exerciseDao.update(exercise);
-//        System.out.println(exerciseDao.read(exercise.getId()));
-//        System.out.println("------------");
-//        List<Exercise> all = exerciseDao.findAll();
-//        for(Exercise exer :all){
-//            System.out.println(exer);
-//        }
-//        exerciseDao.delete(exercise.getId());
-//        List<Exercise> allex = exerciseDao.findAll();
-//        System.out.println("------------");
-//        for(Exercise exer :allex){
-//            System.out.println(exer);
-//        }
-//        System.out.println("---------");
-//        GroupDao groupDao = new GroupDao();
-//        Group group = new Group();
-//        group.setName("pierwsza grupa");
-//        groupDao.create(group);
-//
-//        Group group2 = new Group();
-//        group2.setName("druga grupa");
-//        groupDao.create(group2);
-//
-//        System.out.println(groupDao.read(group.getId()));
-//        System.out.println("----------");
-//        group2.setName("nowa druga grupa");
-//        groupDao.update(group2);
-//        List<Group> all = groupDao.findAll();
-//        for(Group group1 : all){
-//            System.out.println(group1);
-//        }
-//        System.out.println("-----------");
-//        groupDao.delete(group2.getId());
-//        List<Group> allgroup = groupDao.findAll();
-//        for(Group group1 : allgroup){
-//            System.out.println(group1);
-//        }
-//
+            System.out.println("Options:");
+            System.out.println("Add");
+            System.out.println("Edit");
+            System.out.println("Delete");
+            System.out.println("Quit");
+            System.out.print("What would you like to do: ");
 
-//
-//        SolutionDao solutionDao = new SolutionDao();
-//        List<Solution> all = solutionDao.findAllByUserId(1);
-//        for(Solution solution: all){
-//            System.out.println(solution);
-//        }
-//        List<Solution> allByExerciseId = solutionDao.findAllByExerciseId(1);
-//        for(Solution solution : allByExerciseId){
-//            System.out.println(solution);
-//        }
+            Scanner scanner = new Scanner(System.in);
+            String option = "";
+            if(scanner.hasNext()){
+                option = scanner.nextLine().toLowerCase().trim();
+            }
 
-        UserDao userDao = new UserDao();
-        List<User> allByGroupId = userDao.findAllByGroupId(1);
-        for(User user : allByGroupId){
-            System.out.println(user);
+
+            User user = new User();
+
+            switch (option) {
+                case "add":
+
+                    System.out.print("name: ");
+                    user.setName(scanner.nextLine());
+                    System.out.print("email: ");
+                    user.setEmail(scanner.nextLine());
+                    System.out.print("password: ");
+                    user.setPassword(scanner.nextLine());
+                    System.out.print("Group id: ");
+                    while (!scanner.hasNextInt()){
+                        scanner.nextLine();
+                        System.out.print("Type a number:");
+                    }
+                    user.setUserGroupId(Integer.parseInt(scanner.nextLine()));
+                    userDao.create(user);
+
+                    break;
+
+                case "edit":
+
+                    System.out.print("User id: ");
+                    while (!scanner.hasNextInt()){
+                        scanner.nextLine();
+                        System.out.print("Type a number:");
+                    }
+                    int userId = Integer.parseInt(scanner.nextLine());
+                    user = userDao.read(userId);
+
+                    System.out.print("name: ");
+                    user.setName(scanner.nextLine());
+                    System.out.print("email: ");
+                    user.setEmail(scanner.nextLine());
+                    System.out.print("password: ");
+                    user.setPassword(scanner.nextLine());
+                    System.out.print("Group id: ");
+                    while (!scanner.hasNextInt()){
+                        scanner.nextLine();
+                        System.out.print("Type a number:");
+                    }
+                    user.setUserGroupId(Integer.parseInt(scanner.nextLine()));
+                    userDao.update(user);
+
+                    break;
+
+                case "delete":
+                    System.out.print("User id: ");
+                    while (!scanner.hasNextInt()){
+                        scanner.nextLine();
+                        System.out.print("Type a number:");
+                    }
+                    userId = Integer.parseInt(scanner.nextLine());
+
+                    //usunęcie rozwiązań użytkownika / user's solutions delete
+                    SolutionDao solutionDao = new SolutionDao();
+                    List<Solution> solutionToDelete = solutionDao.findAllByUserId(userId);
+                    for(Solution solution : solutionToDelete){
+                        solutionDao.delete(solution.getId());
+                    }
+
+                    userDao.delete(userId);
+
+                    break;
+
+                case "quit":
+                    work = false;
+                    break;
+
+                    default:
+                        System.out.println("That option does not exist");
+                        break;
+
+
+
+            }
+
+
         }
-
     }
 }
