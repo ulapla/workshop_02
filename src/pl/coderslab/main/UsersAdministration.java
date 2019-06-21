@@ -18,8 +18,8 @@ public class UsersAdministration {
     public static void main(String[] args) {
 
 
-        boolean work = true;
-        while(work) {
+        boolean run = true;
+        while(run) {
             System.out.println();
             System.out.println("---------------Users administration-----------------");
             UserDao userDao = new UserDao();
@@ -27,7 +27,7 @@ public class UsersAdministration {
             for (User user :users){
                 System.out.println(user);
             }
-            
+
             System.out.println();
             System.out.println("Options:");
             System.out.println("Add");
@@ -110,7 +110,7 @@ public class UsersAdministration {
                     break;
 
                 case "quit":
-                    work = false;
+                    run = false;
                     break;
 
                     default:

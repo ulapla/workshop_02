@@ -12,8 +12,8 @@ public class ExercisesAdministration {
     public static void main(String[] args) {
 
 
-        boolean work = true;
-        while(work) {
+        boolean run = true;
+        while(run) {
             System.out.println();
             System.out.println("---------------Exercises administration-----------------");
             ExerciseDao exerciseDao = new ExerciseDao();
@@ -88,7 +88,7 @@ public class ExercisesAdministration {
                     break;
 
                 case "quit":
-                    work = false;
+                    run = false;
                     break;
 
                 default:
