@@ -36,7 +36,6 @@ public class ExerciseDao {
         try(Connection connection = DatabaseUtils.getConnection("java_warsztat_2")){
             PreparedStatement statement = connection.prepareStatement(READ_EXERCISE_QUERY);
             statement.setInt(1,exerciseId);
-            statement.executeUpdate();
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Exercise exercise = new Exercise();
@@ -81,7 +80,6 @@ public class ExerciseDao {
         try(Connection connection = DatabaseUtils.getConnection("java_warsztat_2")){
             List <Exercise> exercises = new ArrayList<>();
             PreparedStatement statement = connection.prepareStatement(FIND_ALL_EXERCISE_QUERY);
-            statement.executeUpdate();
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()){
                 Exercise exercise = new Exercise();
