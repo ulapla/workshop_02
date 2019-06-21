@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class Main {
+public class UsersAdministration {
     public static void main(String[] args) {
 
 
@@ -27,7 +27,8 @@ public class Main {
             for (User user :users){
                 System.out.println(user);
             }
-
+            
+            System.out.println();
             System.out.println("Options:");
             System.out.println("Add");
             System.out.println("Edit");
