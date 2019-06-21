@@ -121,5 +121,9 @@ public class Main {
         for(Solution solution: all){
             System.out.println(solution);
         }
+        List<Solution> allByExerciseId = solutionDao.findAllByExerciseId(1);
+        for(Solution solution : allByExerciseId){
+            System.out.println(solution);
+        }
     }
 }

@@ -20,6 +20,8 @@ public class SolutionDao {
             "SELECT * FROM solution";
     private static String FIND_ALL_SOLUTIONS_BY_USER_ID_QUERY =
             "SELECT * FROM solution WHERE user_id = ?";
+    private static String FIND_ALL_SOLUTIONS_BY_EXERCISE_ID_QUERY =
+            "SELECT * FROM solution WHERE exercise_id = ?";
 
 
     public Solution create(Solution solution) {
@@ -115,6 +117,29 @@ public class SolutionDao {
         try (Connection conn = DatabaseUtils.getConnection("java_warsztat_2")) {
             PreparedStatement statement = conn.prepareStatement(FIND_ALL_SOLUTIONS_BY_USER_ID_QUERY);
             statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Solution solution = new Solution();
+                solution.setId(resultSet.getInt("id"));
+                solution.setCreated(resultSet.getString("created"));
+                solution.setUpdated(resultSet.getString("updated"));
+                solution.setDescription(resultSet.getString("description"));
+                solution.setExerciseId(resultSet.getInt("exercise_id"));
+                solution.setUserId(resultSet.getInt("user_id"));
+                solutions.add(solution);
+            }
+            return solutions;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<Solution> findAllByExerciseId(int exerciseId){
+        List<Solution> solutions = new ArrayList<>();
+        try (Connection conn = DatabaseUtils.getConnection("java_warsztat_2")) {
+            PreparedStatement statement = conn.prepareStatement(FIND_ALL_SOLUTIONS_BY_EXERCISE_ID_QUERY);
+            statement.setInt(1, exerciseId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Solution solution = new Solution();
