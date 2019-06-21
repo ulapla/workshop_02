@@ -15,41 +15,41 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        User user = new User("Jan Kowalski", "Jan.Kowalski@gmail.com", "tajne", 1);
-        User user1 = new User("Adam Kowalski", "adam.Kowalski@gmail.com", "tajne", 1);
-        User user2 = new User("Robert Kowalski", "robert.Kowalski@gmail.com", "tajne", 1);
-
-        UserDao userDao = new UserDao();
-
+//        User user = new User("Jan Kowalski", "Jan.Kowalski@gmail.com", "tajne", 1);
+//        User user1 = new User("Adam Kowalski", "adam.Kowalski@gmail.com", "tajne", 1);
+//        User user2 = new User("Robert Kowalski", "robert.Kowalski@gmail.com", "tajne", 1);
+//
+//        UserDao userDao = new UserDao();
+//
 //        userDao.create(user);
 //        userDao.create(user1);
 //        userDao.create(user2);
-
+//
 //        int id = user.getId();
-
-        User loadUser = userDao.read(1);
-        System.out.println(loadUser);
-
-        User notExist = userDao.read(100);
-        System.out.println(notExist);
-
-        loadUser.setName("Adam Nowak");
-        loadUser.setEmail("adam.nowak@gmail.com");
-        userDao.update(loadUser);
-
-        User copyUser = userDao.read(1);
-        System.out.println(copyUser);
-
-        //userDao.delete(id);
-
-        User loadAgain = userDao.read(1);
-        System.out.println(loadAgain);
-
-        System.out.println("find all users");
-        User[] users = userDao.findAll();
-        for(User myUser : users) {
-            System.out.println(myUser);
-        }
+//
+//        User loadUser = userDao.read(1);
+//        System.out.println(loadUser);
+//
+//        User notExist = userDao.read(100);
+//        System.out.println(notExist);
+//
+//        loadUser.setName("Adam Nowak");
+//        loadUser.setEmail("adam.nowak@gmail.com");
+//        userDao.update(loadUser);
+//
+//        User copyUser = userDao.read(1);
+//        System.out.println(copyUser);
+//
+//        //userDao.delete(id);
+//
+//        User loadAgain = userDao.read(1);
+//        System.out.println(loadAgain);
+//
+//        System.out.println("find all users");
+//        User[] users = userDao.findAll();
+//        for(User myUser : users) {
+//            System.out.println(myUser);
+//        }
 
 //        userDao.delete(id);
 //        userDao.delete(user1.getId());
@@ -89,32 +89,37 @@ public class Main {
 //        for(Exercise exer :allex){
 //            System.out.println(exer);
 //        }
-        System.out.println("---------");
-        GroupDao groupDao = new GroupDao();
-        Group group = new Group();
-        group.setName("pierwsza grupa");
-        groupDao.create(group);
+//        System.out.println("---------");
+//        GroupDao groupDao = new GroupDao();
+//        Group group = new Group();
+//        group.setName("pierwsza grupa");
+//        groupDao.create(group);
+//
+//        Group group2 = new Group();
+//        group2.setName("druga grupa");
+//        groupDao.create(group2);
+//
+//        System.out.println(groupDao.read(group.getId()));
+//        System.out.println("----------");
+//        group2.setName("nowa druga grupa");
+//        groupDao.update(group2);
+//        List<Group> all = groupDao.findAll();
+//        for(Group group1 : all){
+//            System.out.println(group1);
+//        }
+//        System.out.println("-----------");
+//        groupDao.delete(group2.getId());
+//        List<Group> allgroup = groupDao.findAll();
+//        for(Group group1 : allgroup){
+//            System.out.println(group1);
+//        }
+//    }
 
-        Group group2 = new Group();
-        group2.setName("druga grupa");
-        groupDao.create(group2);
 
-        System.out.println(groupDao.read(group.getId()));
-        System.out.println("----------");
-        group2.setName("nowa druga grupa");
-        groupDao.update(group2);
-        List<Group> all = groupDao.findAll();
-        for(Group group1 : all){
-            System.out.println(group1);
-        }
-        System.out.println("-----------");
-        groupDao.delete(group2.getId());
-        List<Group> allgroup = groupDao.findAll();
-        for(Group group1 : allgroup){
-            System.out.println(group1);
+        SolutionDao solutionDao = new SolutionDao();
+        List<Solution> all = solutionDao.findAllByUserId(1);
+        for(Solution solution: all){
+            System.out.println(solution);
         }
     }
-
-
-
 }
