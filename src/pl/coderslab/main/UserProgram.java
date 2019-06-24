@@ -60,7 +60,7 @@ public class UserProgram {
                         }
                         int solutionId = Integer.parseInt(scanner.nextLine());
                         solution = solutionDao.read(solutionId);
-                        if (solution.getDescription() == null) {
+                        if (solution == null || solution.getDescription() == null) {
                           break;
                         }
                         System.out.println("wrong id");
